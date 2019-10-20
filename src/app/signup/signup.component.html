@@ -34,7 +34,7 @@
 		    	<div class="input-group-prepend">
 				    <span class="input-group-text "> <i class="fa fa-envelope"></i> </span>
 				 </div>
-		        <input type="email" required #email="ngModel" [class.is-invalid]=" email.touched && email.invalid" [(ngModel)] = "scrumUserModel.email" name="email" pattern="[a-z0-9._-]+@[a-z0-9]+\.[a-z]{2,}$" class="form-control" placeholder="Email address">
+		        <input type="email" required #email="ngModel" [class.is-invalid]=" email.touched && email.invalid" [(ngModel)] = "scrumUserModel.email" name="email" pattern="[A-Za-z0-9._-]+@[A-Za-z0-9]+\.[a-z]{2,}$" class="form-control" placeholder="Email address">
 		        <div class="invalid-feedback" *ngIf="email.errors && (email.invalid || email.touched)">
 				        <span *ngIf="email.errors.required" >Email is requred</span>
 				        <span class="text-danger"  *ngIf="email.errors.pattern">Please enter a valid email address

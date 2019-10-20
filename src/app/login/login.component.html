@@ -22,7 +22,7 @@
 		    	<div class="input-group-prepend">
 				    <span class="input-group-text "> <i class="fa fa-envelope"></i> </span>
 				 </div>
-		        <input type="email" required #email="ngModel" [class.is-invalid]=" email.touched && email.invalid" [(ngModel)] = "scrumUserModel.email" name="email" pattern="[a-z0-9._-]+@[a-z0-9]+\.[a-z]{2,}$" class="form-control" placeholder="Email address">
+		        <input type="email" required #email="ngModel" ngModel [class.is-invalid]=" email.touched && email.invalid" name="email" pattern="[a-z0-9._-]+@[a-z0-9]+\.[a-z]{2,}$" class="form-control" placeholder="Email address">
 		        <div class="invalid-feedback" *ngIf="email.errors && (email.invalid || email.touched)">
 				        <span *ngIf="email.errors.required" >Email is requred</span>
 				        <span class="text-danger"  *ngIf="email.errors.pattern">Please enter a valid email address
@@ -34,7 +34,7 @@
 		    	<div class="input-group-prepend">
 				    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 				</div>
-		        <input type="password" required #password="ngModel" [class.is-invalid]="password.invalid && password.touched" [(ngModel)] = "scrumUserModel.password"  name="password" class="form-control" placeholder="Password" >
+		        <input type="password" required #password="ngModel" ngModel [class.is-invalid]="password.invalid && password.touched" name="password" class="form-control" placeholder="Password" >
 		        <div class="invalid-feedback" *ngIf="password.errors && (password.invalid || password.touched)">
 			        <span *ngIf="password.errors.required" >Please type your password</span>
 	        	</div>

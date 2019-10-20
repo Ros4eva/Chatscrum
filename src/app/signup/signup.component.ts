@@ -18,12 +18,19 @@ export class SignupComponent implements OnInit {
 
   scrumUserModel = new Scrumuser ('','','','','');
 
+  rose(message, data) {
+    var x = document.getElementById("alert");
+    document.getElementById('alert').innerHTML = message;
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+  }
+
   onSubmit() {
   	console.log(this.scrumUserModel)
-  	this._scrumdataService.signup(this.scrumUserModel).subscribe(
-  	data => console.log('success!', data),
-  	error => console.log('Error!', error)
-  	)
+    this._scrumdataService.signup(this.scrumUserModel).subscribe(
+    data => this.rose('Account Created Successfully!', console.log(data)),
+    error => this.rose('Error Creating Account', console.log(error))
+    )
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ScrumdataService } from '../scrumdata.service'
 import { Router } from '@angular/router';
+import { Http, Response } from '@angular/Http';
 
 
 @Component({

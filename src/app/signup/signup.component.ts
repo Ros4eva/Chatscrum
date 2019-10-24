@@ -18,6 +18,8 @@ export class SignupComponent implements OnInit {
 
   scrumUserModel = new Scrumuser ('','','','','');
 
+  feedback = ""
+
   rose(message, data) {
     var x = document.getElementById("alert");
     document.getElementById('alert').innerHTML = message;

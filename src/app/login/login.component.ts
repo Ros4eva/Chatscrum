@@ -11,7 +11,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  scrumUserLoginData = {email: 'email', password: 'password', projname: 'projname'}
+  scrumUserLoginData = {email: '', password: '', projname: ''}
 
   constructor(private _scrumdataservice: ScrumdataService, private _router: Router) { }
 

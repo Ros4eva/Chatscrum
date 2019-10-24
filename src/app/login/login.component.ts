@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScrumdataService } from '../scrumdata.service'
 import { Router } from '@angular/router';
-import { Http, Response } from '@angular/Http';
 
 
 @Component({
@@ -11,7 +10,7 @@ import { Http, Response } from '@angular/Http';
 })
 export class LoginComponent implements OnInit {
 
-  scrumUserLoginData = {};
+  scrumUserLoginData = {}
 
   constructor(private _scrumdataservice: ScrumdataService, private _router: Router) { }
 

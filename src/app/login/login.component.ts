@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ScrumdataService } from '../scrumdata.service'
 import { Router } from '@angular/router';
-import { auth } from 'firebase';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Component({

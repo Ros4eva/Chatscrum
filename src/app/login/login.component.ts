@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  scrumUserLoginData = {}
+  scrumUserLoginData = {};
 
   constructor(private _scrumdataservice: ScrumdataService, private _router: Router) { }
 

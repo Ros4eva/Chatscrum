@@ -30,7 +30,9 @@
 	    </div>
 	  </div>
 	</nav>
+	<a href="/changerole/{{project_id}}">Change Role</a>
 	<div style="margin: 10px;">
+		<div>{{loggedUser.role}}</div>
 		<!-- <table *ngFor="let participant of pparticipants" class="table">
 			<p><strong>{{ participant['user']['nickname'] }}</strong></p>
 
@@ -88,22 +90,26 @@
 	<div  class="row table mt-3">
 		<div class="col">
 			<h4>Tasks For The Week</h4>
-			<div cdkDropList #tftwList="cdkDropList" [cdkDropListData]="TFTW" [cdkDropListConnectedTo]="[tftdList, verifyList, doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+			<div cdkDropList #tftwList="cdkDropList" [cdkDropListData]="TFTW" [cdkDropListConnectedTo]="[tftdList, verifyList, doneList]" 
+			  class="example-list" (cdkDropListDropped)="drop($event)" (cdkDropEntered)="entered($event)" (cdkDropExited)="exited($event)" 
+			  [cdkDropListEnterPredicate]="evenPredicate0">
     			<div class="example-box" *ngFor="let item of TFTW" cdkDrag [cdkDragData]="item">
-					<strong>{{item[0]}}</strong><br>
-					<strong>Task: </strong>{{item[1]}}<br>
-					<strong>Status: </strong>{{item[2]}}<br>
+					<strong>{{item[1]}}</strong><br>
+					<strong>Task: </strong>{{item[2]}}<br>
+					<strong>Status: </strong>{{item[3]}}<br>
     			</div>
   			</div>
 		</div>
 
 		<div class="col">
 			<h4>Tasks For The Day</h4>
-			<div cdkDropList #tftdList="cdkDropList" [cdkDropListData]="TFTD" [cdkDropListConnectedTo]="[tftwList, verifyList, doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+			<div cdkDropList #tftdList="cdkDropList" [cdkDropListData]="TFTD" [cdkDropListConnectedTo]="[tftwList, verifyList, doneList]" 
+			  class="example-list" (cdkDropListDropped)="drop($event)" (cdkDropEntered)="entered($event)" (cdkDropExited)="exited($event)" 
+			  [cdkDropListEnterPredicate]="evenPredicate">
     			<div class="example-box" *ngFor="let item of TFTD" cdkDrag [cdkDragData]="item">
-					<strong>{{item[0]}}</strong><br>
-					<strong>Task: </strong>{{item[1]}}<br>
-					<strong>Status: </strong>{{item[2]}}<br>
+					<strong>{{item[1]}}</strong><br>
+					<strong>Task: </strong>{{item[2]}}<br>
+					<strong>Status: </strong>{{item[3]}}<br>
     			</div>
   			</div>
 		</div>
@@ -111,22 +117,25 @@
 		<div class="col">
 			<h4>Verified Tasks</h4>
 			<div cdkDropList #verifyList="cdkDropList" [cdkDropListData]="verify" [cdkDropListConnectedTo]="[tftwList, tftdList, doneList]"
-				class="example-list" (cdkDropListDropped)="drop($event)">
+				class="example-list" (cdkDropListDropped)="drop($event)" (cdkDropEntered)="entered($event)" (cdkDropExited)="exited($event)"
+				 [cdkDropListEnterPredicate]="evenPredicate1">
 				<div class="example-box" *ngFor="let item of verify" cdkDrag [cdkDragData]="item">
-					<strong>{{item[0]}}</strong><br>
-					<strong>Task: </strong>{{item[1]}}<br>
-					<strong>Status: </strong>{{item[2]}}<br>
+					<strong>{{item[1]}}</strong><br>
+					<strong>Task: </strong>{{item[2]}}<br>
+					<strong>Status: </strong>{{item[3]}}<br>
 				</div>
 			</div>
 		</div>
 
 		<div class="col">
 			<h4>Done Tasks</h4>
-			<div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[tftwList, tftdList, verifyList, doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+			<div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[tftwList, tftdList, verifyList, doneList]" 
+			  class="example-list" (cdkDropListDropped)="drop($event)" (cdkDropEntered)="entered($event)" (cdkDropExited)="exited($event)"
+			   [cdkDropListEnterPredicate]="evenPredicate2">
     			<div class="example-box" *ngFor="let item of done" cdkDrag [cdkDragData]="item">
-					<strong>{{item[0]}}</strong><br>
-					<strong>Task: </strong>{{item[1]}}<br>
-					<strong>Status: </strong>{{item[2]}}<br>
+					<strong>{{item[1]}}</strong><br>
+					<strong>Task: </strong>{{item[2]}}<br>
+					<strong>Status: </strong>{{item[3]}}<br>
     			</div>
   			</div>
 		</div>

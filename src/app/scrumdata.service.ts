@@ -12,9 +12,10 @@ export class ScrumdataService {
   constructor(private _http: HttpClient) { }
 
   _url = 'https://liveapi.chatscrum.com/scrum/api/scrumusers/';
-  _loginUrl = 'https://liveapi.chatscrum.com/scrum/api-token-auth/';
-  _scrumProjectUrl = 'https://liveapi.chatscrum.com/scrum/api/scrumprojects/';
   _goalUrl = 'https://liveapi.chatscrum.com/scrum/api/scrumgoals/';
+  _loginUrl = 'https://liveapi.chatscrum.com/scrum/api-token-auth/';
+  _projectRoles = 'https://liveapi.chatscrum.com/scrum/api/scrumprojectroles/';
+  _scrumProjectUrl = 'https://liveapi.chatscrum.com/scrum/api/scrumprojects/';
   token;
   encode;
 
@@ -42,6 +43,10 @@ export class ScrumdataService {
     return this._http.post<any>(this._url, { 'email': user['email'], 'projname': user['projname'], 'full_name': user['fullname'], 'usertype': 'Owner',}, this.httpOptions);
   }
 
+  // changeRole(project_id) {
+  //   return this._http.get<any>(this._projectRoles + project_id, this.httpOptions);
+  // }
+
   // createproject(user: Createproject) {
   //   return this._http.post<any>(this._url, { 'name': user['projname'], 'scrumprojectrole_set': [{ 'role': 'Owner', 'color': 'White', 'user': { 'nickname': 'test1', 'id': '666' }, 'scrumgoal_set': [], 'scrumnote_set': [], 'scrumlog_set': [], 'scrumworkid_set': [] }], 'scrumslack_set': [] }, this.httpOptions);
   // }
@@ -61,7 +66,7 @@ export class ScrumdataService {
     this.token = this.getUser().token;
     this.encode = JSON.parse(localStorage.getItem('Auth'));
     this.encode = btoa(`${this.encode.email}:${this.encode.password}`);
-    return this._http.patch(this._goalUrl + user[3] + '/', { status: user[2] }, {
+    return this._http.patch(this._goalUrl + user[4] + '/', { status: user[3] }, {
       headers: new HttpHeaders()
         .set('Authorization', `Basic ${this.encode}==`)
     })

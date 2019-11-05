@@ -110,7 +110,7 @@
 
 		<div class="col">
 			<h4>Verified Tasks</h4>
-			<div cdkDropList #verifyList="cdkDropList" [cdkDropListData]="verify" [cdkDropListConnectedTo]="[tftw, tftdList, doneList]"
+			<div cdkDropList #verifyList="cdkDropList" [cdkDropListData]="verify" [cdkDropListConnectedTo]="[tftwList, tftdList, doneList]"
 				class="example-list" (cdkDropListDropped)="drop($event)">
 				<div class="example-box" *ngFor="let item of verify" cdkDrag [cdkDragData]="item">
 					<strong>{{item[0]}}</strong><br>
@@ -122,7 +122,7 @@
 
 		<div class="col">
 			<h4>Done Tasks</h4>
-			<div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[tftw, tftdList, verifyList, doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+			<div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[tftwList, tftdList, verifyList, doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
     			<div class="example-box" *ngFor="let item of done" cdkDrag [cdkDragData]="item">
 					<strong>{{item[0]}}</strong><br>
 					<strong>Task: </strong>{{item[1]}}<br>

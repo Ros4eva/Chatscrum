@@ -7,7 +7,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     <link type="text/css" href="/signup.component.css">
-	<title>Sign Up</title>
+	<title>Scrumboard</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5 shadow">
@@ -30,13 +30,114 @@
 	    </div>
 	  </div>
 	</nav>
-	<div align="center">
-		<h1>Welcome To Scrumboard</h1>
+	<div style="margin: 10px;">
+		<!-- <table *ngFor="let participant of pparticipants" class="table">
+			<p><strong>{{ participant['user']['nickname'] }}</strong></p>
+
+			<tr>
+				<th scope="col">Tasks For The Week</th>
+				<th scope="col">Tasks For The Day</th>
+				<th scope="col">Verify</th>
+				<th scope="col">Done</th>
+			</tr>
+
+			<tr>
+				<td>
+					<div *ngFor="let goal of participant['scrumgoal_set']">
+						<div *ngIf="goal['status'] == 0 && goal['user'] == participant['id']">
+							{{ goal['name'] }} <br>
+							{{ goal['id'] }}
+							<p>status: {{ goal['status'] }}</p>
+						</div>
+					</div>
+				</td>
+
+				<td>
+					<div *ngFor="let goal of participant['scrumgoal_set']">
+						<div *ngIf="goal['status'] == 1 && goal['user'] == participant['id']">
+							{{ goal['name'] }}<br>
+							{{ goal['id'] }}
+							<p>status: {{ goal['status'] }}</p>
+						</div>
+					</div>
+				</td>
+
+				<td>
+					<div *ngFor="let goal of participant['scrumgoal_set']">
+						<div *ngIf="goal['status'] == 2 && goal['user'] == participant['id']">
+							{{ goal['name'] }}<br>
+							{{ goal['id'] }}
+							<p>status: {{ goal['status'] }}</p>
+						</div>
+					</div>
+				</td>
+
+				<td>
+					<div *ngFor="let goal of participant['scrumgoal_set']">
+						<div *ngIf="goal['status'] == 3 && goal['user'] == participant['id']">
+							{{ goal['name'] }}<br>
+							{{ goal['id'] }}
+							<p>status: {{ goal['status'] }}</p>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>-->
+
+
+	<div  class="row table mt-3">
+		<div class="col">
+			<h4>Tasks For The Week</h4>
+			<div cdkDropList #tftwList="cdkDropList" [cdkDropListData]="TFTW" [cdkDropListConnectedTo]="[tftdList, verifyList, doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+    			<div class="example-box" *ngFor="let item of TFTW" cdkDrag [cdkDragData]="item">
+					<strong>{{item[0]}}</strong><br>
+					<strong>Task: </strong>{{item[1]}}<br>
+					<strong>Status: </strong>{{item[2]}}<br>
+    			</div>
+  			</div>
+		</div>
+
+		<div class="col">
+			<h4>Tasks For The Day</h4>
+			<div cdkDropList #tftdList="cdkDropList" [cdkDropListData]="TFTD" [cdkDropListConnectedTo]="[tftwList, verifyList, doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+    			<div class="example-box" *ngFor="let item of TFTD" cdkDrag [cdkDragData]="item">
+					<strong>{{item[0]}}</strong><br>
+					<strong>Task: </strong>{{item[1]}}<br>
+					<strong>Status: </strong>{{item[2]}}<br>
+    			</div>
+  			</div>
+		</div>
+
+		<div class="col">
+			<h4>Verified Tasks</h4>
+			<div cdkDropList #verifyList="cdkDropList" [cdkDropListData]="verify" [cdkDropListConnectedTo]="[tftw, tftdList, doneList]"
+				class="example-list" (cdkDropListDropped)="drop($event)">
+				<div class="example-box" *ngFor="let item of verify" cdkDrag [cdkDragData]="item">
+					<strong>{{item[0]}}</strong><br>
+					<strong>Task: </strong>{{item[1]}}<br>
+					<strong>Status: </strong>{{item[2]}}<br>
+				</div>
+			</div>
+		</div>
+
+		<div class="col">
+			<h4>Done Tasks</h4>
+			<div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[tftw, tftdList, verifyList, doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+    			<div class="example-box" *ngFor="let item of done" cdkDrag [cdkDragData]="item">
+					<strong>{{item[0]}}</strong><br>
+					<strong>Task: </strong>{{item[1]}}<br>
+					<strong>Status: </strong>{{item[2]}}<br>
+    			</div>
+  			</div>
+		</div>
 	</div>
+</div>
 
 	<div>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</div>
+
+
 </body>
 </html>

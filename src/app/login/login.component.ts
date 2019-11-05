@@ -11,7 +11,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  scrumUserLoginData = {email: '', password: '', projname: ''}
+  scrumUserLoginData = {email: null, password: null, projname: ''}
 
   constructor(private _scrumdataservice: ScrumdataService, private _router: Router) { }
 
@@ -31,8 +31,10 @@ export class LoginComponent implements OnInit {
   	this._scrumdataservice.login (this.scrumUserLoginData).subscribe(
   	data => {
   		console.log('success', data)
-  		localStorage.setItem('token', data.token)
-  		this._router.navigate(['/scrumboard'])
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('user', JSON.stringify(data))
+      localStorage.setItem('Auth', JSON.stringify(this.scrumUserLoginData))
+  		this._router.navigate(['/scrumboard', data['project_id']])
   	},
   	error => {
   		this.rose('Invalid email or password', console.log(error))

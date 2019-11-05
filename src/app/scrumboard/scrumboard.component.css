@@ -1,0 +1,10 @@
+
+.example-box {
+    margin-top: 15px;
+    margin-bottom: 15px;
+   
+}
+
+.example-box:hover {
+    background-color: rgb(248, 242, 242);
+}

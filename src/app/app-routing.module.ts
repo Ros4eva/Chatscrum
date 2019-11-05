@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 
 import { HomepageComponent } from './homepage/homepage.component';
 import { ScrumboardComponent } from './scrumboard/scrumboard.component';
+import { CreateprojectComponent } from './createproject/createproject.component';
 import { AuthGuard } from './auth.guard';
 
 
@@ -15,7 +16,8 @@ const routes: Routes = [
 	{path: 'home', component: HomepageComponent},
 	{path: 'login', component: LoginComponent},
 	{path: 'signup', component: SignupComponent},
-	{path: 'scrumboard', component: ScrumboardComponent, canActivate:[AuthGuard]}
+	{path: 'createproject', component: CreateprojectComponent},
+	{path: 'scrumboard/:project_id', component: ScrumboardComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

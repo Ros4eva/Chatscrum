@@ -23,6 +23,13 @@ export class ChangeroleComponent implements OnInit {
 
     this.projectId = parseInt((this.route.snapshot.paramMap.get('project_id')))
     this.getProjectGoals();
+    this.getUser();
+  }
+
+  loggedUser;
+
+  getUser() {
+    this.loggedUser = this.scrumDataService.getUser();
   }
 
   drop(event: CdkDragDrop<string[]>) {

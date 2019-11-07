@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ScrumdataService } from '../scrumdata.service';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
-import { CdkDragEnter, CdkDragExit } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Creategoal } from '../creategoal';
 
 @Component({
   selector: 'app-scrumboard',
@@ -18,6 +18,7 @@ export class ScrumboardComponent implements OnInit {
   done = [];
   loggedUser;
 
+
   constructor(private _route: ActivatedRoute, private _scrumdataService: ScrumdataService, private http: HttpClient) { }
 
   project_id = 0
@@ -26,8 +27,12 @@ export class ScrumboardComponent implements OnInit {
 
   ngOnInit() {
     this.loggedUser = this._scrumdataService.getUser();
-  	this.project_id = parseInt((this._route.snapshot.paramMap.get('project_id')));
+    this.project_id = parseInt((this._route.snapshot.paramMap.get('project_id')));
     this.getProjectGoals();
+    this.hideAdminpanel();
+    this.openModal();
+    
+    
   }
   
 
@@ -79,8 +84,8 @@ export class ScrumboardComponent implements OnInit {
   getProjectGoals() {
   	this._scrumdataService.allProjectGoals(this.project_id).subscribe(
   		data => {
-  			console.log(data)
         this.pparticipants = data['data']
+        
         this.pparticipants.forEach(element => {
           element['scrumgoal_set'].forEach(item => {
             if(item['status'] == 0 && item['user'] == element['id']) {
@@ -98,7 +103,13 @@ export class ScrumboardComponent implements OnInit {
             
           });
         });
-        
+
+        this.pparticipants.forEach(element => {
+          if (this.loggedUser.name === element['user']['nickname']) {
+            
+            localStorage.setItem('userID', element['user']['id'])
+          } 
+        });
   		},
   		error => {
   			console.log('error', error)
@@ -121,6 +132,7 @@ export class ScrumboardComponent implements OnInit {
   evenPredicate2(item) {
     return ((item.data[5] === item.data[1] && item.data[3] === 2 && item.data[0] === "Quality Analyst") || (item.data[0] === "Owner" && item.data[5] === item.data[1]) || (item.data[0] === "Admin" && item.data[5] === item.data[1]))
   }
+  
 
   drop(event: CdkDragDrop<string[]>) {
       if (event.previousContainer === event.container) {
@@ -163,4 +175,47 @@ export class ScrumboardComponent implements OnInit {
       }
     }
 
+    hideAdminpanel() {
+      if (this.loggedUser.role != 'Admin' && this.loggedUser.role != 'Owner') {
+        document.getElementById('admin').style.display = "none"
+      }
+    }
+
+  createGoalModel = new Creategoal('')
+
+  onCreateGoal() {
+    console.log(this.createGoalModel)
+    this._scrumdataService.createUserGoal(this.createGoalModel).subscribe(
+      data => console.log('Success', data),
+      error => console.log('Error',error)
+    )
+  }
+
+  openModal(){
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("close");
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function () {
+      modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  }
+  
 }

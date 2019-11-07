@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +17,8 @@ import { AuthGuard } from './auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateprojectComponent } from './createproject/createproject.component';
 import { ChangeroleComponent } from './changerole/changerole.component';
+import { LogoutComponent } from './logout/logout.component';
+import { CreategoalComponent } from './creategoal/creategoal.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,8 @@ import { ChangeroleComponent } from './changerole/changerole.component';
     ScrumboardComponent,
     CreateprojectComponent,
     ChangeroleComponent,
+    LogoutComponent,
+    CreategoalComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,9 +38,11 @@ import { ChangeroleComponent } from './changerole/changerole.component';
     HttpClientModule,
     FormsModule,
     DragDropModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MDBBootstrapModule.forRoot()
 
   ],
+  schemas: [NO_ERRORS_SCHEMA],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
 })

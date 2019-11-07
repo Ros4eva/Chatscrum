@@ -17,8 +17,7 @@ export class ScrumboardComponent implements OnInit {
 	verify = [];
   done = [];
   loggedUser;
-
-
+  
   constructor(private _route: ActivatedRoute, private _scrumdataService: ScrumdataService, private http: HttpClient) { }
 
   project_id = 0

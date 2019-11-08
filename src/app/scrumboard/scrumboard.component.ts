@@ -17,7 +17,7 @@ export class ScrumboardComponent implements OnInit {
 	verify = [];
   done = [];
   loggedUser;
-  
+
   constructor(private _route: ActivatedRoute, private _scrumdataService: ScrumdataService, private http: HttpClient) { }
 
   project_id = 0
@@ -180,7 +180,7 @@ export class ScrumboardComponent implements OnInit {
       }
     }
 
-  createGoalModel = new Creategoal('')
+  createGoalModel = new Creategoal('', Number(localStorage.getItem('userID')))
 
   onCreateGoal() {
     console.log(this.createGoalModel)

@@ -62,7 +62,7 @@ export class ScrumdataService {
     this.encode = JSON.parse(localStorage.getItem('Auth'));
     this.projectId = this.getUser().project_id;
     this.encode = btoa(`${this.encode.email}:${this.encode.password}`);
-    return this._http.post<any>(this._sprintUrl, {'name':user['goal'], 'project_id':this.projectId}, {headers: new HttpHeaders()
+    return this._http.post<any>(this._goalUrl + user['user'], {'name':user['goal'], 'project_id':this.projectId}, {headers: new HttpHeaders()
       .set('Authorization', `Basic ${this.encode}==`)})
   }
 

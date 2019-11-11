@@ -97,10 +97,11 @@
 				</strong>
 				<div cdkDropList #tftwList="cdkDropList" [cdkDropListData]="TFTW"
 					[cdkDropListConnectedTo]="[tftdList, verifyList, doneList]" class="example-list"
-					(cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="evenPredicate0">
-					<div class="example-box" *ngFor="let item of TFTW" cdkDrag [cdkDragData]="item">
+					(cdkDropListDropped)="drop($event)" class="ex" [cdkDropListEnterPredicate]="evenPredicate0">
+					<div class="example-box" *ngFor="let item of TFTW" cdkDrag [cdkDragData]="item" class="pd">
 						{{item[2]}}<br>
-						{{item[4]}}<br><br>
+						{{item[4]}}<br>
+						<strong>Status: </strong>{{item[3]}}<br>
 					</div>
 				</div>
 			</div>
@@ -111,10 +112,11 @@
 				</strong>
 				<div cdkDropList #tftdList="cdkDropList" [cdkDropListData]="TFTD"
 					[cdkDropListConnectedTo]="[tftwList, verifyList, doneList]" class="example-list"
-					(cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="evenPredicate">
-					<div class="example-box" *ngFor="let item of TFTD" cdkDrag [cdkDragData]="item">
+					(cdkDropListDropped)="drop($event)" class="ex" [cdkDropListEnterPredicate]="evenPredicate">
+					<div class="example-box" *ngFor="let item of TFTD" cdkDrag [cdkDragData]="item" class="pd">
 						{{item[2]}}<br>
-						{{item[4]}}<br><br>
+						{{item[4]}}<br>
+						<strong>Status: </strong>{{item[3]}}<br>
 					</div>
 				</div>
 			</div>
@@ -125,10 +127,11 @@
 				</strong>
 				<div cdkDropList #verifyList="cdkDropList" [cdkDropListData]="verify"
 					[cdkDropListConnectedTo]="[tftwList, tftdList, doneList]" class="example-list"
-					(cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="evenPredicate1">
-					<div class="example-box" *ngFor="let item of verify" cdkDrag [cdkDragData]="item">
+					(cdkDropListDropped)="drop($event)" class="ex" [cdkDropListEnterPredicate]="evenPredicate1">
+					<div class="example-box" *ngFor="let item of verify" cdkDrag [cdkDragData]="item" class="pd">
 						{{item[2]}}<br>
-						{{item[4]}}<br><br>
+						{{item[4]}}<br>
+						<strong>Status: </strong>{{item[3]}}<br>
 					</div>
 				</div>
 			</div>
@@ -139,17 +142,18 @@
 				</strong>
 				<div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
 					[cdkDropListConnectedTo]="[tftwList, tftdList, verifyList, doneList]" class="example-list"
-					(cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="evenPredicate2">
-					<div class="example-box" *ngFor="let item of done" cdkDrag [cdkDragData]="item">
+					(cdkDropListDropped)="drop($event)" class="ex" [cdkDropListEnterPredicate]="evenPredicate2">
+					<div class="example-box" *ngFor="let item of done" cdkDrag [cdkDragData]="item" class="pd">
 						{{item[2]}}<br>
-						{{item[4]}}<br><br>
+						{{item[4]}}<br>
+						<strong>Status: </strong>{{item[3]}}<br>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
     <div>
-		<button id="myBtn">Create Goal</button>
+		<button id="myBtn">Create Goal | Sprint</button>
 		
 		
 		<div id="myModal" class="modal">
@@ -158,10 +162,10 @@
 			<div class="modal-content">
 				<span class="close" id="close">&times;</span>
 				<h4>Add A Goal</h4>
-				<form #userAddGoalForm = "ngForm" name="userAddGoalForm" novalidate (ngSubmit)="onCreateGoal()">
+				<form #userAddGoalForm = "ngForm" name="userAddGoalForm" novalidate (ngSubmit)="onCreateGoal()" action="/scrumboard/{{project_id}}">
 					<div class="form-group input-group">
 						<input type="text" required #name="ngModel" required [class.is-invalid]="name.touched && name.invalid"
-							[(ngModel)]="createGoalModel.name" name="name" class="form-control" placeholder="Enter Goal">
+							[(ngModel)]="goalData.goalname" name="name" class="form-control" placeholder="Enter Goal">
 						<div class="invalid-feedback">
 							Please Enter A Goal
 						</div><br>
@@ -171,6 +175,7 @@
 						</div>
 					</div>
 				</form>
+				<button type="submit" class="btn btn-light btn-block" *ngIf="loggedUser.role === 'Owner' " (click)="startSprint()">Start Sprint</button>
 			</div>
 		
 		</div>

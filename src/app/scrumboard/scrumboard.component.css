@@ -63,3 +63,26 @@
   color: white;
   border-radius: 1px;
 }
+
+cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+
+.ex {
+  z-index:5;
+  border: solid 1p white !important;
+  min-height: 60px!important;
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
+}
+
+.pd {
+  margin-bottom: 30px;
+  background-color: grey;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+}

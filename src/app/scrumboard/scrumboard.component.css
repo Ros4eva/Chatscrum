@@ -80,12 +80,9 @@ cdk-drag-preview {
 }
 
 .pd {
-  margin-bottom: 30px;
+  margin-bottom: 35px;
   background-color: white;
-  border-radius: 5px;
-  padding: 10px;
   color: black;
-  box-shadow: #6b436e;
 }
 
 .title {

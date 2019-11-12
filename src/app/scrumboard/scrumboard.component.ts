@@ -288,9 +288,9 @@ export class ScrumboardComponent implements OnInit {
     let data1 = { project_id: this.loggedUser.project_id }
     this._scrumdataService.createSprint(data1).subscribe(
       result => {
-        this.rose("Goal Created Successfully", console.log(result))
+        this.rose("New Sprint Started Successfully", console.log(result))
       },
-      err => { this.rose("Error Creating Goal", (console.log(err))) }
+      err => { this.rose("Error Starting New Sprint", (console.log(err))) }
     )
   }
 

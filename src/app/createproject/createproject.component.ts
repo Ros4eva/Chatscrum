@@ -30,8 +30,8 @@ export class CreateprojectComponent implements OnInit {
   onProjectSubmit() {
     console.log(this.createProjectModel)
     this._scrumdataService.createproject(this.createProjectModel).subscribe(
-    data => {console.log('success', data)},
-    error => {console.log('create project failed', error)}
+    data => {this.rose('Project Create Successfully' ,console.log(data))},
+      error => { this.rose('There was an error creating Project', console.log(error)) },
   )
   }
 

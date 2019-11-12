@@ -17,6 +17,7 @@ export class ScrumboardComponent implements OnInit {
 	TFTD = [];
 	verify = [];
   done = [];
+  USERS = [];
 
   id;
   data;
@@ -93,37 +94,71 @@ export class ScrumboardComponent implements OnInit {
   getProjectGoals() {
   	this._scrumdataService.allProjectGoals(this.project_id).subscribe(
   		data => {
+        // this.filter(data);
         this.pparticipants = data['data']
         
-        this.pparticipants.forEach(element => {
-          element['scrumgoal_set'].forEach(item => {
-            if(item['status'] == 0 && item['user'] == element['id']) {
-              this.TFTW.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
-            }
-            if (item['status'] == 1 && item['user'] == element['id']) {
-              this.TFTD.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
-            }
-            if (item['status'] == 2 && item['user'] == element['id']) {
-              this.verify.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
-            }
-            if (item['status'] == 3 && item['user'] == element['id']) {
-              this.done.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
-            }
-            
-          });
-        });
-
         // this.pparticipants.forEach(element => {
-        //   if (this.loggedUser.name === element['user']['nickname']) {
-            
-        //     localStorage.setItem('userID', element['user']['id'])
-        //   } 
+        //   element['scrumgoal_set'].forEach(item => {
+        //     if(item['status'] == 0 ) {
+        //       this.TFTW.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
+        //     }
+        //     if (item['status'] == 1) {
+        //       this.TFTD.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
+        //     }
+        //     if (item['status'] == 2 ) {
+        //       this.verify.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
+        //     }
+        //     if (item['status'] == 3) {
+        //       this.done.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
+        //     }
+  
+        //   });
         // });
+        this.filUser();
+        this.filter(data)
   		},
   		error => {
   			console.log('error', error)
   		}
   	)
+  }
+
+  filUser () {
+    this.pparticipants.forEach(element => {
+      if(this.USERS.includes(element['user']['nickname'])) {
+        console.log('already exist')
+      } else {
+        this.USERS.push(element['user']['nickname'])
+      }
+
+    });
+  }
+
+
+  filter(data) {
+    let obj = data["data"]
+    console.log(this.loggedUser)
+    // console.log(obj)
+    Object.keys(obj).map((data1) => {
+      obj[data1].scrumgoal_set.map((list) => {
+        if (list.status === 0) {
+
+          this.TFTW.push([obj[data1].role, obj[data1].user.nickname, list.name, list.status, list.id, this.loggedUser.name, this.loggedUser.role])
+
+        }
+        if (list.status === 1) {
+          this.TFTD.push([obj[data1].role, obj[data1].user.nickname, list.name, list.status, list.id, this.loggedUser.name, this.loggedUser.role])
+        }
+        if (list.status === 2) {
+          this.verify.push([obj[data1].role, obj[data1].user.nickname, list.name, list.status, list.id, this.loggedUser.name, this.loggedUser.role])
+        }
+        if (list.status === 3) {
+          this.done.push([obj[data1].role, obj[data1].user.nickname, list.name, list.status, list.id, this.loggedUser.name, this.loggedUser.role])
+        }
+      })
+
+    })
+
   }
 
   evenPredicate0(item) {
@@ -168,8 +203,8 @@ export class ScrumboardComponent implements OnInit {
           event.item.data[3] = this.calculateRole(event.container.id)
           console.log(event.item.data)
           this._scrumdataService.updateStatus(event.item.data).subscribe(
-            data => (console.log(data)),
-            err => (console.log(err))
+            data => { this.rose("Goal Moved Successfully", (console.log(data))) },
+            err => { this.rose("Error Moving Goal", (console.log(err))) }
           )
           transferArrayItem
             (
@@ -200,6 +235,13 @@ export class ScrumboardComponent implements OnInit {
   //   )
   // }
 
+
+  rose(message, data) {
+    var x = document.getElementById("alert");
+    document.getElementById('alert').innerHTML = message;
+    x.className = "show";
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+  }
 
   onCreateGoal() {
     console.log(this.loggedUser)
@@ -235,10 +277,10 @@ export class ScrumboardComponent implements OnInit {
 
     this._scrumdataService.addGoal(Data).subscribe(
       result => {
-        console.log(result)
+        this.rose("Goal Created Successfully", console.log(result))
         location.reload();
       },
-      err => (console.log(err))
+      err => {this.rose("Error Creating Goal", (console.log(err)))}
     )
   }
 
@@ -246,57 +288,33 @@ export class ScrumboardComponent implements OnInit {
     let data1 = { project_id: this.loggedUser.project_id }
     this._scrumdataService.createSprint(data1).subscribe(
       result => {
-        console.log(result);
+        this.rose("Goal Created Successfully", console.log(result))
       },
-      err => (console.log(err))
+      err => { this.rose("Error Creating Goal", (console.log(err))) }
     )
   }
 
-  // getProjectGoal() {
-  //   console.log(this.loggedUser.project_id)
-  //   this._scrumdataService.allProjectGoals(this.loggedUser.project_id).subscribe(
-  //     data => {
-  //       let obj = data["data"];
-  //       Object.keys(obj).map((data1) => {
-  //         obj[data1].scrumgoal_set.map((list) => {
-
-  //           console.log("h", list)
-  //         })
-
-  //       })
-  //       this.projectData = data;
-  //     },
-  //     error => {
-  //       console.log(error);
-  //     }
-  //   )
-  // }
-
   openModal(){
-    var modal = document.getElementById("myModal");
+     const modal = document.getElementById("myModal");
 
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
+     const btn = document.getElementById("myBtn");
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementById("close");
+     const span = document.getElementById("close");
 
-    // When the user clicks the button, open the modal 
     btn.onclick = function () {
       modal.style.display = "block";
     }
 
-    // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
       modal.style.display = "none";
     }
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
       if (event.target == modal) {
         modal.style.display = "none";
       }
     }
+    
   }
   
 }

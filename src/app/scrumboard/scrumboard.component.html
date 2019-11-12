@@ -9,7 +9,7 @@
 </head>
 <body>
 	<!--Navbar -->
-	<nav class="mb-1 navbar navbar-expand-lg navbar-dark" style="background-color:darkgrey ;">
+	<nav class="mb-1 navbar fixed-top navbar-expand-lg navbar-dark" style="background-color:darkgrey ;">
 		<a class="navbar-brand" href="home">Rose Chatscrum</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
 			aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,6 +17,11 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent-4">
 			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<button type="button" class="btn btn-link nav-link active" id="myBtn">
+						<i class="fas fa-folder-plus"></i> Create Goal | Sprint</button>
+					
+				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/scrumboard/{{project_id}}">
 						<i class="fas fa-chalkboard"></i> Scrum Board</a>
@@ -89,96 +94,123 @@
 			</tr>
 		</table>-->
 
-	<div class="table mt-3">
+	<div *ngFor="let user of USERS" style="margin-top: 4em;">
+		<div class="card">
+			<div class="card-body">
+				<strong>{{user}}</strong>
+			</div>
+		</div>
+	
+		
+		<div class="table mt-3">
+			<span id="alert"></span>
 		<div class="d-flex mb-3">
 			<div class="p-2 w-100">
-				<strong>
+	
+				<div class="title" align="center">
 					<h4>Tasks For The Week</h4>
-				</strong>
+				</div>
+				
 				<div cdkDropList #tftwList="cdkDropList" [cdkDropListData]="TFTW"
 					[cdkDropListConnectedTo]="[tftdList, verifyList, doneList]" class="example-list"
 					(cdkDropListDropped)="drop($event)" class="ex" [cdkDropListEnterPredicate]="evenPredicate0">
 					<div class="example-box" *ngFor="let item of TFTW" cdkDrag [cdkDragData]="item" class="pd">
-						{{item[2]}}<br>
-						{{item[4]}}<br>
-						<strong>Status: </strong>{{item[3]}}<br>
+						<div *ngIf="user.includes(item[1])">
+							{{item[2]}}<br>
+							{{item[4]}}<br>
+							<strong>Status: </strong>{{item[3]}}<br>
+						</div>
 					</div>
 				</div>
 			</div>
 		
 			<div class="p-2 w-100">
-				<strong>
+				<div class="title" align="center">
 					<h4>Tasks For The Day</h4>
-				</strong>
+				</div>
+					
 				<div cdkDropList #tftdList="cdkDropList" [cdkDropListData]="TFTD"
 					[cdkDropListConnectedTo]="[tftwList, verifyList, doneList]" class="example-list"
 					(cdkDropListDropped)="drop($event)" class="ex" [cdkDropListEnterPredicate]="evenPredicate">
 					<div class="example-box" *ngFor="let item of TFTD" cdkDrag [cdkDragData]="item" class="pd">
-						{{item[2]}}<br>
-						{{item[4]}}<br>
-						<strong>Status: </strong>{{item[3]}}<br>
+						<div *ngIf="user.includes(item[1])">
+							{{item[2]}}<br>
+							{{item[4]}}<br>
+							<strong>Status: </strong>{{item[3]}}<br>
+						</div>
 					</div>
 				</div>
 			</div>
 		
 			<div class="p-2 w-100">
-				<strong>
+				<div class="title" align="center">
 					<h4>Verified Tasks</h4>
-				</strong>
+				</div>
+			
 				<div cdkDropList #verifyList="cdkDropList" [cdkDropListData]="verify"
 					[cdkDropListConnectedTo]="[tftwList, tftdList, doneList]" class="example-list"
 					(cdkDropListDropped)="drop($event)" class="ex" [cdkDropListEnterPredicate]="evenPredicate1">
 					<div class="example-box" *ngFor="let item of verify" cdkDrag [cdkDragData]="item" class="pd">
-						{{item[2]}}<br>
-						{{item[4]}}<br>
-						<strong>Status: </strong>{{item[3]}}<br>
+						<div *ngIf="user.includes(item[1])">
+							{{item[2]}}<br>
+							{{item[4]}}<br>
+							<strong>Status: </strong>{{item[3]}}<br>
+						</div>
 					</div>
 				</div>
 			</div>
 		
 			<div class="p-2 w-100">
-				<strong>
+				<div class="title" align="center">
 					<h4>Done Tasks</h4>
-				</strong>
+				</div>
+
 				<div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
 					[cdkDropListConnectedTo]="[tftwList, tftdList, verifyList, doneList]" class="example-list"
 					(cdkDropListDropped)="drop($event)" class="ex" [cdkDropListEnterPredicate]="evenPredicate2">
 					<div class="example-box" *ngFor="let item of done" cdkDrag [cdkDragData]="item" class="pd">
-						{{item[2]}}<br>
-						{{item[4]}}<br>
-						<strong>Status: </strong>{{item[3]}}<br>
+						<div *ngIf ="user.includes(item[1])">
+							{{item[2]}}<br>
+							{{item[4]}}<br>
+							<strong>Status: </strong>{{item[3]}}<br>
+						</div>
+						
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-    <div>
-		<button id="myBtn">Create Goal | Sprint</button>
-		
-		
-		<div id="myModal" class="modal">
-		
-			
-			<div class="modal-content">
-				<span class="close" id="close">&times;</span>
-				<h4>Add A Goal</h4>
-				<form #userAddGoalForm = "ngForm" name="userAddGoalForm" novalidate (ngSubmit)="onCreateGoal()" action="/scrumboard/{{project_id}}">
-					<div class="form-group input-group">
-						<input type="text" required #name="ngModel" required [class.is-invalid]="name.touched && name.invalid"
-							[(ngModel)]="goalData.goalname" name="name" class="form-control" placeholder="Enter Goal">
-						<div class="invalid-feedback">
-							Please Enter A Goal
-						</div><br>
 
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary btn-block"> Create Goal </button>
-						</div>
-					</div>
-				</form>
-				<button type="submit" class="btn btn-light btn-block" *ngIf="loggedUser.role === 'Owner' " (click)="startSprint()">Start Sprint</button>
-			</div>
+    <div>
+	</div>
 		
+		
+		
+	</div>
+	<div id="myModal" class="modal">
+	
+	
+		<div class="modal-content">
+			<span class="close" id="close">&times;</span>
+			<h4>Add A Goal</h4>
+			<form #userAddGoalForm="ngForm" name="userAddGoalForm" novalidate (ngSubmit)="onCreateGoal()"
+				action="/scrumboard/{{project_id}}">
+				<div class="form-group input-group">
+					<input type="text" required #name="ngModel" required [class.is-invalid]="name.touched && name.invalid"
+						[(ngModel)]="goalData.goalname" name="name" class="form-control" placeholder="Enter Goal">
+					<div class="invalid-feedback">
+						Please Enter A Goal
+					</div><br>
+	
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block"> Create Goal </button>
+					</div>
+				</div>
+			</form>
+			<button type="submit" class="btn btn-light btn-block" *ngIf="loggedUser.role === 'Owner' "
+				(click)="startSprint()">Start Sprint</button>
 		</div>
+	
 	</div>
 	<!-- <script type="text/javascript" lang="javascript">
 		var modal = document.getElementById("myModal");

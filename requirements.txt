@@ -1,0 +1,8 @@
+selenium
+yagmail
+configparser
+pytest
+pytest-xdist
+pytest-html
+beautifulsoup4
+lxml

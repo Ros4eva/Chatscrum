@@ -1,0 +1,13 @@
+Implemented using selenium grid server
+
+1. Download Java Selenium standalone server
+https://www.seleniumhq.org/download/
+
+2. Download Chrome Driver
+https://chromedriver.chromium.org/
+
+3. Start the grid server
+java -jar selenium-server-standalone-3.141.59.jar -role hub
+
+4. Connect the hub to grid
+java -Dwebdriver.chrome.driver="C:\chromedriver.exe" -jar selenium-server-standalone-3.141.59.jar -role webdriver -hub http://localhost:4444/grid/register -port 5566

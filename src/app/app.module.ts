@@ -19,6 +19,7 @@ import { CreateprojectComponent } from './createproject/createproject.component'
 import { ChangeroleComponent } from './changerole/changerole.component';
 import { LogoutComponent } from './logout/logout.component';
 import { CreategoalComponent } from './creategoal/creategoal.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CreategoalComponent } from './creategoal/creategoal.component';
     ChangeroleComponent,
     LogoutComponent,
     CreategoalComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

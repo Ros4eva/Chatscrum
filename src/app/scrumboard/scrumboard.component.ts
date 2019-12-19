@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ScrumdataService } from '../scrumdata.service';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Creategoal } from '../creategoal';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,7 +26,7 @@ export class ScrumboardComponent implements OnInit {
   userId;
 
   goalData = {
-    goalname: null,
+    goalname: '',
   };
 
   constructor(private _route: ActivatedRoute, private _scrumdataService: ScrumdataService, private router: Router, private http: HttpClient) { }
@@ -94,28 +93,27 @@ export class ScrumboardComponent implements OnInit {
   getProjectGoals() {
   	this._scrumdataService.allProjectGoals(this.project_id).subscribe(
   		data => {
-        // this.filter(data);
         this.pparticipants = data['data']
         
-        // this.pparticipants.forEach(element => {
-        //   element['scrumgoal_set'].forEach(item => {
-        //     if(item['status'] == 0 ) {
-        //       this.TFTW.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
-        //     }
-        //     if (item['status'] == 1) {
-        //       this.TFTD.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
-        //     }
-        //     if (item['status'] == 2 ) {
-        //       this.verify.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
-        //     }
-        //     if (item['status'] == 3) {
-        //       this.done.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
-        //     }
+        this.pparticipants.forEach(element => {
+          element['scrumgoal_set'].forEach(item => {
+            if(item['status'] == 0 ) {
+              this.TFTW.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
+            }
+            if (item['status'] == 1) {
+              this.TFTD.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
+            }
+            if (item['status'] == 2 ) {
+              this.verify.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
+            }
+            if (item['status'] == 3) {
+              this.done.push([this.loggedUser.role, element['user']['nickname'], item['name'], item['status'], item['id'], this.loggedUser.name])
+            }
   
-        //   });
-        // });
+          });
+        });
         this.filUser();
-        this.filter(data)
+        
   		},
   		error => {
   			console.log('error', error)
@@ -134,32 +132,6 @@ export class ScrumboardComponent implements OnInit {
     });
   }
 
-
-  filter(data) {
-    let obj = data["data"]
-    console.log(this.loggedUser)
-    // console.log(obj)
-    Object.keys(obj).map((data1) => {
-      obj[data1].scrumgoal_set.map((list) => {
-        if (list.status === 0) {
-
-          this.TFTW.push([obj[data1].role, obj[data1].user.nickname, list.name, list.status, list.id, this.loggedUser.name, this.loggedUser.role])
-
-        }
-        if (list.status === 1) {
-          this.TFTD.push([obj[data1].role, obj[data1].user.nickname, list.name, list.status, list.id, this.loggedUser.name, this.loggedUser.role])
-        }
-        if (list.status === 2) {
-          this.verify.push([obj[data1].role, obj[data1].user.nickname, list.name, list.status, list.id, this.loggedUser.name, this.loggedUser.role])
-        }
-        if (list.status === 3) {
-          this.done.push([obj[data1].role, obj[data1].user.nickname, list.name, list.status, list.id, this.loggedUser.name, this.loggedUser.role])
-        }
-      })
-
-    })
-
-  }
 
   evenPredicate0(item) {
     return ((item.data[5] === item.data[1] && item.data[3] === 2 && item.data[0] === "Quality Analyst") || (item.data[0] === "Owner" && item.data[5] === item.data[1]) || (item.data[0] === "Admin" && item.data[5] === item.data[1]))
@@ -225,17 +197,6 @@ export class ScrumboardComponent implements OnInit {
       }
     }
 
-  createGoalModel = new Creategoal('', Number(localStorage.getItem('userID')))
-
-  // onCreateGoal() {
-  //   console.log(this.createGoalModel)
-  //   this._scrumdataService.createUserGoal(this.createGoalModel).subscribe(
-  //     data => console.log('Success', data),
-  //     error => console.log('Error',error)
-  //   )
-  // }
-
-
   rose(message, data) {
     var x = document.getElementById("alert");
     document.getElementById('alert').innerHTML = message;
@@ -255,23 +216,6 @@ export class ScrumboardComponent implements OnInit {
     })
     let Data = { goalname: this.goalData.goalname, user: 'm' + this.userId, id: this.loggedUser.project_id }
     console.log(Data)
-    /* this._scrumdataService.addGoal(Data).subscribe(
-      result => {
-        console.log(result)
-        let data = { project_id: this.loggedUser.project_id}
-        console.log(data)
-        this._scrumdataService.createSprint(data).subscribe(
-          data => (console.log(data)),
-          err => (console.log(err))
-        )
-        this.router.navigate(['/scrumboard',this.loggedUser.project_id ])
-      } ,
-      err => {
-        this.Response = "Error Creating Goal"
-        console.log(err)
-        
-      }
-    ); */
 
     let data1 = { project_id: this.loggedUser.project_id }
 
